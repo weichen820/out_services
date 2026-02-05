@@ -1,0 +1,93 @@
+.class Lcom/android/server/ServiceWatcher$2;
+.super Landroid/content/BroadcastReceiver;
+.source "ServiceWatcher.java"
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingMethod;
+    value = Lcom/android/server/ServiceWatcher;->start()Z
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x0
+    name = null
+.end annotation
+
+
+# instance fields
+.field final synthetic this$0:Lcom/android/server/ServiceWatcher;
+
+
+# direct methods
+.method constructor <init>(Lcom/android/server/ServiceWatcher;)V
+    .registers 2
+
+    .prologue
+    .line 1
+    iput-object p1, p0, Lcom/android/server/ServiceWatcher$2;->this$0:Lcom/android/server/ServiceWatcher;
+
+    .line 158
+    invoke-direct {p0}, Landroid/content/BroadcastReceiver;-><init>()V
+
+    .line 1
+    return-void
+.end method
+
+
+# virtual methods
+.method public onReceive(Landroid/content/Context;Landroid/content/Intent;)V
+    .registers 6
+
+    .prologue
+    .line 161
+    invoke-virtual {p2}, Landroid/content/Intent;->getAction()Ljava/lang/String;
+
+    move-result-object v0
+
+    .line 162
+    const-string/jumbo v1, "android.intent.extra.user_handle"
+
+    .line 163
+    const/16 v2, -0x2710
+
+    .line 162
+    invoke-virtual {p2, v1, v2}, Landroid/content/Intent;->getIntExtra(Ljava/lang/String;I)I
+
+    move-result v1
+
+    .line 164
+    const-string/jumbo v2, "android.intent.action.USER_SWITCHED"
+
+    invoke-virtual {v2, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v2
+
+    if-eqz v2, :cond_1c
+
+    .line 165
+    iget-object v0, p0, Lcom/android/server/ServiceWatcher$2;->this$0:Lcom/android/server/ServiceWatcher;
+
+    invoke-virtual {v0, v1}, Lcom/android/server/ServiceWatcher;->switchUser(I)V
+
+    .line 169
+    :cond_1b
+    :goto_1b
+    return-void
+
+    .line 166
+    :cond_1c
+    const-string/jumbo v2, "android.intent.action.USER_UNLOCKED"
+
+    invoke-virtual {v2, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v0
+
+    if-eqz v0, :cond_1b
+
+    .line 167
+    iget-object v0, p0, Lcom/android/server/ServiceWatcher$2;->this$0:Lcom/android/server/ServiceWatcher;
+
+    invoke-virtual {v0, v1}, Lcom/android/server/ServiceWatcher;->unlockUser(I)V
+
+    goto :goto_1b
+.end method
